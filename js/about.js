@@ -13,6 +13,7 @@ function parseTweets(runkeeper_tweets) {
 	var numberOfLiveEvents = 0;
 	var numberOfAchievements = 0;
 	var numberOfMisc = 0;
+	var numberOfWrittenText = 0;
 	
 	//This line modifies the DOM, searching for the tag with the numberTweets ID and updating the text.
 	//It works correctly, your task is to update the text of the other tags in the HTML file!
@@ -26,19 +27,25 @@ function parseTweets(runkeeper_tweets) {
 		else if (tweet_array[i].source == "achievement") numberOfAchievements++;
 		else if (tweet_array[i].source == "completed_event") numberOfCompletedEvents++;
 		else if (tweet_array[i].source == "miscellaneous") numberOfMisc++;
+		
+		if (tweet_array[i].written) numberOfWrittenText++;
 	}
 
 	document.getElementsByClassName("completedEvents")[0].innerText = numberOfCompletedEvents;
-	document.getElementsByClassName("completedEventsPct")[0].innerText = (numberOfCompletedEvents / tweet_array.length).toFixed(2) + "%";
+	document.getElementsByClassName("completedEventsPct")[0].innerText = (numberOfCompletedEvents / tweet_array.length * 100).toFixed(2) + "%";
 	
 	document.getElementsByClassName("liveEvents")[0].innerText = numberOfLiveEvents;
-	document.getElementsByClassName("liveEventsPct")[0].innerText = (numberOfLiveEvents / tweet_array.length).toFixed(2) + "%";
+	document.getElementsByClassName("liveEventsPct")[0].innerText = (numberOfLiveEvents / tweet_array.length * 100).toFixed(2) + "%";
 	
 	document.getElementsByClassName("achievements")[0].innerText = numberOfAchievements;
-	document.getElementsByClassName("achievementsPct")[0].innerText = (numberOfAchievements / tweet_array.length).toFixed(2) + "%";
+	document.getElementsByClassName("achievementsPct")[0].innerText = (numberOfAchievements / tweet_array.length * 100).toFixed(2) + "%";
 	
 	document.getElementsByClassName("miscellaneous")[0].innerText = numberOfMisc;
-	document.getElementsByClassName("miscellaneousPct")[0].innerText = (numberOfMisc / tweet_array.length).toFixed(2) + "%";
+	document.getElementsByClassName("miscellaneousPct")[0].innerText = (numberOfMisc / tweet_array.length * 100).toFixed(2) + "%";
+
+	document.getElementsByClassName("completedEvents")[1].innerText = numberOfCompletedEvents;
+	document.getElementsByClassName("written")[0].innerText = numberOfWrittenText;
+	document.getElementsByClassName("writtenPct")[0].innerText = (numberOfWrittenText / tweet_array.length * 100).toFixed(2) + "%";
 }
 
 //Wait for the DOM to load
