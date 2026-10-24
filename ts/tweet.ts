@@ -44,7 +44,21 @@ class Tweet {
             return "unknown";
         }
         //TODO: parse the activity type from the text of the tweet
-        return "";
+        var startPos = 0;
+        var activity = "";
+
+        if (this.text.includes("mi")) startPos = this.text.indexOf("mi");
+        else if (this.text.includes("km")) startPos = this.text.search("km");
+
+        startPos += 3;
+
+        while (this.text.charAt(startPos) != " ")
+        {
+            activity += this.text.charAt(startPos);
+            startPos++;
+        }
+            
+        return activity;
     }
 
     get distance():number {
@@ -52,7 +66,26 @@ class Tweet {
             return 0;
         }
         //TODO: parse the distance from the text of the tweet
-        return 0;
+        var startPos = 0;
+        var distance = "";
+
+        if (this.text.includes("mi")) startPos = this.text.indexOf("mi");
+        else if (this.text.includes("km")) startPos = this.text.search("km");
+
+        startPos -= 2;
+
+        while (this.text.charAt(startPos) != " ")
+        {
+            startPos--;
+        }
+        startPos++;
+        while (this.text.charAt(startPos) != " ")
+        {
+            distance += this.text.charAt(startPos);
+            startPos++;
+        }
+
+        return Number(distance);
     }
 
     getHTMLTableRow(rowNumber:number):string {
