@@ -47,7 +47,7 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementsByClassName("written")[0].innerText = numberOfWrittenText;
 	document.getElementsByClassName("writtenPct")[0].innerText = (numberOfWrittenText / tweet_array.length * 100).toFixed(2) + "%";
 
-	document.getElementsByClassName("writtenPct")[0].innerText = tweet_array[15].distance;
+	document.getElementsByClassName("writtenPct")[0].innerText = tweet_array[0].distance;
 }
 
 //Wait for the DOM to load

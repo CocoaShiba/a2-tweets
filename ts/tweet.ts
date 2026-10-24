@@ -68,9 +68,14 @@ class Tweet {
         //TODO: parse the distance from the text of the tweet
         var startPos = 0;
         var distance = "";
+        var mileMultiplier = 1;
 
         if (this.text.includes("mi")) startPos = this.text.indexOf("mi");
-        else if (this.text.includes("km")) startPos = this.text.search("km");
+        else if (this.text.includes("km"))
+        {
+            startPos = this.text.search("km");
+            mileMultiplier = 1.609;
+        } 
 
         startPos -= 2;
 
@@ -85,7 +90,7 @@ class Tweet {
             startPos++;
         }
 
-        return Number(distance);
+        return Number(distance) / mileMultiplier;
     }
 
     getHTMLTableRow(rowNumber:number):string {
