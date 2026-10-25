@@ -92,6 +92,31 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('longestActivityType').innerText = highestValueKey;
 	document.getElementById('shortestActivityType').innerText = lowestValueKey;
 
+	var weekdayCount = 0;
+	var weekdayDistance = 0;
+	var weekendCount = 0;
+	var weekendDistance = 0;
+
+	for (i = 0; i < tweet_array.length; i++)
+	{
+		if (tweet_array[i].time.getDay() == 6 || tweet_array[i].time.getDay() == 7 || tweet_array[i].time.getDay() == 0)
+		{
+			weekendCount++;
+			weekendDistance += tweet_array[i].distance;
+		}
+		else
+		{
+			weekdayCount++;
+			weekdayDistance += tweet_array[i].distance;
+		}
+	}
+
+	var weekdayAverage = weekdayDistance / weekdayCount;
+	var weekendAverage = weekendDistance / weekendCount;
+
+	if (weekdayAverage > weekendAverage) document.getElementById('weekdayOrWeekendLonger').innerText = "the weekday";
+	else document.getElementById('weekdayOrWeekendLonger').innerText = "the weekend";
+
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "A graph of the number of Tweets containing each type of activity.",

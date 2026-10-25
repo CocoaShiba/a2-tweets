@@ -102,7 +102,10 @@ class Tweet {
             if (startPos > this.text.length) return 0;
         }
 
-        return Number(distance) / mileMultiplier;
+        var finalValue = Number(distance) / mileMultiplier;
+
+        if (Number.isNaN(finalValue)) return 0;
+        return finalValue;
     }
 
     getHTMLTableRow(rowNumber:number):string {
