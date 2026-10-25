@@ -118,25 +118,23 @@ function parseTweets(runkeeper_tweets) {
 	else document.getElementById('weekdayOrWeekendLonger').innerText = "the weekend";
 
 
-	const activitiesArray = new Array();
-	for (i = 0; i < tweet_array.length; i++)
-	{
-		activitiesArray.push(tweet_array[i].activityType);
-	} 
-
-	const chartData = activitiesArray.map(item => ({ category: item }));
+	// const activitiesArray = new Array();
+	// for (i = 0; i < tweet_array.length; i++)
+	// {
+	// 	activitiesArray.push(tweet_array[i].activityType);
+	// } 
 
 	activity_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
 		data: {
-			"values": activitiesArray
+			"values": tweet_array
 		},
 		//TODO: Add mark and encoding
 		mark: "bar",
 		encoding: {
 			x: {
-				field: "data",
+				field: "activityType",
 				type: "nominal"
 			},
 			y: {
@@ -149,6 +147,44 @@ function parseTweets(runkeeper_tweets) {
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
+	distance_vis_spec = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+		"description": "A graph of the number of Tweets containing each type of activity.",
+		data: {
+			"values": tweet_array
+		},
+		"params": [
+			{
+				"name": "highestActivity1",
+				"value": highestValues[0]
+			},
+			{
+				"name": "highestActivity2",
+				"value": highestValues[1]
+			},
+			{
+				"name": "highestActivity3",
+				"value": highestValues[2]
+			}
+		],
+		"transform": [
+			{ "filter": "datum.activityType === highestActivity1 || datum.activityType === highestActivity2 || datum.activityType === highestActivity3"}
+		],
+		//TODO: Add mark and encoding
+		mark: "point",
+		encoding: {
+			x: {
+				field: "activityType",
+				type: "nominal"
+			},
+			y: {
+				field: "distance",
+				//aggregate: "count",
+				type: "quantitative"
+			}
+		}
+	};
+	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
 }
 
 //Wait for the DOM to load
