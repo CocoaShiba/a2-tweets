@@ -170,18 +170,20 @@ function parseTweets(runkeeper_tweets) {
 		"transform": [
 			{ "filter": "datum.activityType === highestActivity1 || datum.activityType === highestActivity2 || datum.activityType === highestActivity3"}
 		],
-		//TODO: Add mark and encoding
 		mark: "point",
 		encoding: {
 			x: {
-				field: "activityType",
-				type: "nominal"
+				field: "day",
+				type: "nominal",
+				sort: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+				// aggregate: "count"
 			},
 			y: {
 				field: "distance",
 				//aggregate: "count",
 				type: "quantitative"
-			}
+			},
+			"color": {"field": "activityType", "type": "nominal"},
 		}
 	};
 	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});

@@ -108,6 +108,20 @@ class Tweet {
         return finalValue;
     }
 
+    get day():string {
+        var dayNumber = this.time.getDay();
+
+        if (dayNumber == 0) return "Sun";
+        if (dayNumber == 1) return "Mon";
+        if (dayNumber == 2) return "Tues";
+        if (dayNumber == 3) return "Wed";
+        if (dayNumber == 4) return "Thu";
+        if (dayNumber == 5) return "Fri";
+        if (dayNumber == 6) return "Sat";
+        
+        return "";
+    }
+
     getHTMLTableRow(rowNumber:number):string {
         //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
         return "<tr></tr>";
