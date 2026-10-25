@@ -56,6 +56,8 @@ class Tweet {
         {
             activity += this.text.charAt(startPos);
             startPos++;
+            
+            if (startPos > this.text.length) return "unknown";
         }
             
         return activity;
