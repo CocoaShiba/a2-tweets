@@ -47,8 +47,12 @@ class Tweet {
         var startPos = 0;
         var activity = "";
 
-        if (this.text.includes("mi")) startPos = this.text.indexOf("mi");
-        else if (this.text.includes("km")) startPos = this.text.search("km");
+        const regexMi = /\bmi\b/;
+        const regexKm = /\bkm\b/;
+
+        if (regexMi.test(this.text)) startPos = this.text.indexOf("mi");
+        else if (regexKm.test(this.text)) startPos = this.text.search("km");
+        else return "unknown";
 
         startPos += 3;
 
@@ -72,24 +76,30 @@ class Tweet {
         var distance = "";
         var mileMultiplier = 1;
 
-        if (this.text.includes("mi")) startPos = this.text.indexOf("mi");
-        else if (this.text.includes("km"))
+        const regexMi = /\bmi\b/;
+        const regexKm = /\bkm\b/;
+
+        if (regexMi.test(this.text)) startPos = this.text.indexOf("mi");
+        else if (regexKm.test(this.text))
         {
             startPos = this.text.search("km");
             mileMultiplier = 1.609;
         } 
+        else return 0;
 
         startPos -= 2;
 
         while (this.text.charAt(startPos) != " ")
         {
             startPos--;
+            if (startPos < 0) return 0;
         }
         startPos++;
         while (this.text.charAt(startPos) != " ")
         {
             distance += this.text.charAt(startPos);
             startPos++;
+            if (startPos > this.text.length) return 0;
         }
 
         return Number(distance) / mileMultiplier;

@@ -10,6 +10,7 @@ function parseTweets(runkeeper_tweets) {
 	});
 
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
+	
 	const activities = new Map();
 
 	for  (i = 0; i < tweet_array.length; i++)
@@ -48,6 +49,24 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('firstMost').innerText = highestValues[0];
 	document.getElementById('secondMost').innerText = highestValues[1];
 	document.getElementById('thirdMost').innerText = highestValues[2];
+
+	const distances = new Map();
+
+	for  (i = 0; i < tweet_array.length; i++)
+	{
+		if (!distances.has(tweet_array[i].activityType))
+		{
+			distances.set(tweet_array[i].activityType, tweet_array[i].distance);
+		} 
+		else
+		{
+			distances.set(tweet_array[i].activityType, distances.get(tweet_array[i].activityType) + tweet_array[i].distance);
+		} 
+	}
+
+	for (const [key, value] of distances) {
+		console.log(key + ": " + value);
+	}
 
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
