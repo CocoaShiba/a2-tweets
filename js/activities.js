@@ -130,13 +130,13 @@ function parseTweets(runkeeper_tweets) {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
 		data: {
-			"values": activities
+			"values": activitiesArray
 		},
 		//TODO: Add mark and encoding
 		mark: "bar",
 		encoding: {
 			x: {
-				field: "klsjdf",
+				field: "data",
 				type: "nominal"
 			},
 			y: {
