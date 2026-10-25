@@ -50,23 +50,47 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('secondMost').innerText = highestValues[1];
 	document.getElementById('thirdMost').innerText = highestValues[2];
 
-	const distances = new Map();
+	const totalDistances = new Map();
 
 	for  (i = 0; i < tweet_array.length; i++)
 	{
-		if (!distances.has(tweet_array[i].activityType))
+		if (!totalDistances.has(tweet_array[i].activityType))
 		{
-			distances.set(tweet_array[i].activityType, tweet_array[i].distance);
+			totalDistances.set(tweet_array[i].activityType, tweet_array[i].distance);
 		} 
 		else
 		{
-			distances.set(tweet_array[i].activityType, distances.get(tweet_array[i].activityType) + tweet_array[i].distance);
+			totalDistances.set(tweet_array[i].activityType, totalDistances.get(tweet_array[i].activityType) + tweet_array[i].distance);
 		} 
 	}
 
-	for (const [key, value] of distances) {
-		console.log(key + ": " + value);
+	const averageDistances = new Map();
+
+	for (const [key, value] of totalDistances) {
+		averageDistances.set(key, value / activities.get(key));
 	}
+
+	var highestValue = 0;
+	var highestValueKey = "";
+	var lowestValue = 10000000;
+	var lowestValueKey = "";
+
+	for (i = 0; i < 3; i++)
+	{
+		if (averageDistances.get(highestValues[i]) > highestValue)
+		{
+			highestValue = averageDistances.get(highestValues[i]);
+			highestValueKey = highestValues[i];
+		}
+		if (averageDistances.get(highestValues[i]) < lowestValue && averageDistances.get(highestValues[i]) != 0)
+		{
+			lowestValue = averageDistances.get(highestValues[i]);
+			lowestValueKey = highestValues[i];
+		}
+	}
+
+	document.getElementById('longestActivityType').innerText = highestValueKey;
+	document.getElementById('shortestActivityType').innerText = lowestValueKey;
 
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
