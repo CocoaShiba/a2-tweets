@@ -169,14 +169,12 @@ function parseTweets(runkeeper_tweets) {
 				"field": "day",
 				"type": "nominal",
 				"scale": {
-					"domain": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+					"domain": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 				},
 				"title": "time (day)",
-				// aggregate: "count"
 			},
 			y: {
 				field: "distance",
-				//aggregate: "count",
 				type: "quantitative",
 				"title": "distance",
 			},
@@ -184,6 +182,36 @@ function parseTweets(runkeeper_tweets) {
 		}
 	};
 	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
+
+	distance_vis_spec = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+		"description": "A graph of the number of Tweets containing each type of activity.",
+		"width": 300,
+		"height": 200,
+		"data": {
+			"values": mostTweetedActivities
+		},
+		"mark": "point",
+		"encoding": {
+			x: {
+				"field": "day",
+				"type": "nominal",
+				"scale": {
+					"domain": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+				},
+				"title": "time (day)",
+				// aggregate: "count"
+			},
+			y: {
+				field: "distance",
+				aggregate: "mean",
+				type: "quantitative",
+				"title": "distance",
+			},
+			"color": {"field": "activityType", "type": "nominal", "title": "activityType",},
+		}
+	};
+	vegaEmbed('#distanceVisAggregated', distance_vis_spec, {actions:false});
 }
 
 //Wait for the DOM to load
