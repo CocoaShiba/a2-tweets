@@ -145,45 +145,42 @@ function parseTweets(runkeeper_tweets) {
 	};
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
 
+	const mostTweetedActivities = new Array(); 
+
+	for (var i = 0; i < tweet_array.length; i++) {
+		if (tweet_array[i].activityType == highestValues[0] || tweet_array[i].activityType == highestValues[1] || tweet_array[i].activityType == highestValues[2]) {
+			mostTweetedActivities.push(tweet_array[i]);
+		}
+	}
+
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
-		data: {
-			"values": tweet_array
+		"width": 300,
+		"height": 200,
+		"data": {
+			"values": mostTweetedActivities
 		},
-		"params": [
-			{
-				"name": "highestActivity1",
-				"value": highestValues[0]
-			},
-			{
-				"name": "highestActivity2",
-				"value": highestValues[1]
-			},
-			{
-				"name": "highestActivity3",
-				"value": highestValues[2]
-			}
-		],
-		"transform": [
-			{ "filter": "datum.activityType === highestActivity1 || datum.activityType === highestActivity2 || datum.activityType === highestActivity3"}
-		],
-		mark: "point",
-		encoding: {
+		"mark": "point",
+		"encoding": {
 			x: {
-				field: "day",
-				type: "nominal",
-				sort: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+				"field": "day",
+				"type": "nominal",
+				"scale": {
+					"domain": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+				},
+				"title": "time (day)",
 				// aggregate: "count"
 			},
 			y: {
 				field: "distance",
 				//aggregate: "count",
-				type: "quantitative"
+				type: "quantitative",
+				"title": "distance",
 			},
-			"color": {"field": "activityType", "type": "nominal"},
+			"color": {"field": "activityType", "type": "nominal", "title": "activityType",},
 		}
 	};
 	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
