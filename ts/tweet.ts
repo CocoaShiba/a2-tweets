@@ -122,8 +122,5 @@ class Tweet {
         return "unknown";
     }
 
-    getHTMLTableRow(rowNumber:number):string {
-        //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
-        return "<tr></tr>";
-    }
+    getHTMLTableRow(rowNumber:number):string { return '<tr> <td>' + (rowNumber + 1) + '</td> <td>' + this.activityType + '</td> <td>' + this.text + '</td> </tr>'; }
 }
