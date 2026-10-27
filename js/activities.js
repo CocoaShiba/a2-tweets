@@ -30,7 +30,8 @@ function parseTweets(runkeeper_tweets) {
 	const highestValues = new Array(); 
 	const activitiesCopy = new Map(activities);
 
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < 3; i++) 
+	{
 		var highestValue = 0;
 		var highestValueKey = "";
 
@@ -66,7 +67,8 @@ function parseTweets(runkeeper_tweets) {
 
 	const averageDistances = new Map();
 
-	for (const [key, value] of totalDistances) {
+	for (const [key, value] of totalDistances) 
+	{
 		averageDistances.set(key, value / activities.get(key));
 	}
 
@@ -140,7 +142,8 @@ function parseTweets(runkeeper_tweets) {
 
 	const mostTweetedActivities = new Array(); 
 
-	for (var i = 0; i < tweet_array.length; i++) {
+	for (var i = 0; i < tweet_array.length; i++) 
+	{
 		if (tweet_array[i].activityType == highestValues[0] || tweet_array[i].activityType == highestValues[1] || tweet_array[i].activityType == highestValues[2]) {
 			mostTweetedActivities.push(tweet_array[i]);
 		}
@@ -212,7 +215,8 @@ function parseTweets(runkeeper_tweets) {
 	const button = document.getElementById("aggregate");
 
 	var means = false;
-	button.addEventListener("click", function() {
+	button.addEventListener("click", function() 
+	{
 		means = !means;
 
 		if (means)

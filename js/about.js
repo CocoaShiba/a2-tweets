@@ -22,7 +22,8 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('firstDate').innerText = tweet_array[tweet_array.length-1].time.toLocaleDateString();
 	document.getElementById('lastDate').innerText = tweet_array[0].time.toLocaleDateString();
 
-	for (i = 0; i < tweet_array.length; i++) {
+	for (i = 0; i < tweet_array.length; i++) 
+	{
 		if (tweet_array[i].source == "live_event") numberOfLiveEvents++;
 		else if (tweet_array[i].source == "achievement") numberOfAchievements++;
 		else if (tweet_array[i].source == "completed_event") numberOfCompletedEvents++;
