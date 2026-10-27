@@ -14,10 +14,12 @@ function parseTweets(runkeeper_tweets) {
 
 	const filterBox = document.getElementById('textFilter');
 	const tableRef = document.getElementsByClassName("table table-striped")[0].getElementsByTagName("tbody")[0];
-	
+	document.getElementById("searchText").innerHTML = filterBox.value;
+
 	if (filterBox.value == "")
 	{
 		tableRef.innerHTML = "";
+		document.getElementById("searchCount").innerHTML = "0";
 	}
 	else
 	{
@@ -27,6 +29,7 @@ function parseTweets(runkeeper_tweets) {
 		}
 
 		tableRef.innerHTML = "";
+		document.getElementById("searchCount").innerHTML = writtenTweets.length.toString();
 
 		for (i = 0; i < writtenTweets.length; i++)
 		{
@@ -44,18 +47,8 @@ function addEventHandlerForSearch() {
 
 	filterBox.addEventListener('input', function(event) 
 	{
-    	const currentText = event.target.value; 
-    
-		// if (currentText.trim() !== "") {
-		// console.log("Text is present:", currentText);
-		// } else {
-		// console.log("Text box is empty");
-		// }
-
 		loadSavedRunkeeperTweets().then(parseTweets);
 	});
-
-	
 }
 
 //Wait for the DOM to load
