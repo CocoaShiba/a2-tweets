@@ -5,7 +5,6 @@ function parseTweets(runkeeper_tweets) {
 		return;
 	}
 
-	//TODO: Filter to just the written tweets
 	tweet_array = runkeeper_tweets.map(function(tweet) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
@@ -16,12 +15,13 @@ function parseTweets(runkeeper_tweets) {
 	const tableRef = document.getElementsByClassName("table table-striped")[0].getElementsByTagName("tbody")[0];
 	document.getElementById("searchText").innerHTML = filterBox.value;
 
-	if (filterBox.value == "")
+
+	if (filterBox.value == "") //If the input box is empty
 	{
 		tableRef.innerHTML = "";
 		document.getElementById("searchCount").innerHTML = "0";
 	}
-	else
+	else //If there is text in the input box, iterate through all tweets. If the tweet has written text and includes text from the input box, append it to the writtenTweets array.
 	{
 		for (var i = 0; i < tweet_array.length; i++)
 		{
@@ -31,6 +31,7 @@ function parseTweets(runkeeper_tweets) {
 		tableRef.innerHTML = "";
 		document.getElementById("searchCount").innerHTML = writtenTweets.length.toString();
 
+		//Show all tweets in the writtenTweets array in the table.
 		for (i = 0; i < writtenTweets.length; i++)
 		{
 			var text = "";
@@ -42,9 +43,9 @@ function parseTweets(runkeeper_tweets) {
 }
 
 function addEventHandlerForSearch() {
-	//TODO: Search the written tweets as text is entered into the search box, and add them to the table
 	const filterBox = document.getElementById('textFilter');
 
+	//If the text box is ever updated, run parseTweets()
 	filterBox.addEventListener('input', function(event) 
 	{
 		loadSavedRunkeeperTweets().then(parseTweets);

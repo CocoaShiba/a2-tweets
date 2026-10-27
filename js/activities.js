@@ -8,11 +8,10 @@ function parseTweets(runkeeper_tweets) {
 	tweet_array = runkeeper_tweets.map(function(tweet) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
-
-	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
 	
 	const activities = new Map();
 
+	//Create a Map with a string as key and int as value. The string (key) represents activityType, and int (value) represents the recorded amount of that activityType.
 	for  (i = 0; i < tweet_array.length; i++)
 	{
 		if (!activities.has(tweet_array[i].activityType))
@@ -30,6 +29,7 @@ function parseTweets(runkeeper_tweets) {
 	const highestValues = new Array(); 
 	const activitiesCopy = new Map(activities);
 
+	//Iterate through the activities Map three times to find the first, second, and third most recorded activities.
 	for (i = 0; i < 3; i++) 
 	{
 		var highestValue = 0;
@@ -53,6 +53,7 @@ function parseTweets(runkeeper_tweets) {
 
 	const totalDistances = new Map();
 
+	//Create another Map, this one using a string as key and int as value. The string represents the activityType, and int represents the total distance traveled for that acitivity over all tweets.
 	for  (i = 0; i < tweet_array.length; i++)
 	{
 		if (!totalDistances.has(tweet_array[i].activityType))
@@ -67,6 +68,7 @@ function parseTweets(runkeeper_tweets) {
 
 	const averageDistances = new Map();
 
+	//Create a new Map just like the distances one, but now the int represents AVERAGE distance instead of total. The average is calculated by taking the total distance and dividing it by the tweet count.
 	for (const [key, value] of totalDistances) 
 	{
 		averageDistances.set(key, value / activities.get(key));
@@ -77,6 +79,7 @@ function parseTweets(runkeeper_tweets) {
 	var lowestValue = 10000000;
 	var lowestValueKey = "";
 
+	//Iterate over the average distances to find the highest and lowest averages.
 	for (i = 0; i < 3; i++)
 	{
 		if (averageDistances.get(highestValues[i]) > highestValue)
@@ -99,6 +102,7 @@ function parseTweets(runkeeper_tweets) {
 	var weekendCount = 0;
 	var weekendDistance = 0;
 
+	//Iterate over all tweets and separate them into either weekend or weekday tweets. After they are separated, count the number of tweets and total the distance.
 	for (i = 0; i < tweet_array.length; i++)
 	{
 		if (tweet_array[i].time.getDay() == 6 || tweet_array[i].time.getDay() == 7 || tweet_array[i].time.getDay() == 0)
@@ -149,9 +153,6 @@ function parseTweets(runkeeper_tweets) {
 		}
 	}
 
-	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
-	//Use those visualizations to answer the questions about which activities tended to be longest and when.
-
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
@@ -197,7 +198,6 @@ function parseTweets(runkeeper_tweets) {
 					"domain": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 				},
 				"title": "time (day)",
-				// aggregate: "count"
 			},
 			y: {
 				field: "distance",
@@ -210,10 +210,10 @@ function parseTweets(runkeeper_tweets) {
 	};
 	vegaEmbed('#distanceVisAggregated', distance_vis_spec, {actions:false});
 	document.getElementById("distanceVisAggregated").style.display = 'none';
-	
 
 	const button = document.getElementById("aggregate");
 
+	//Button function to hide/show the two graphs.
 	var means = false;
 	button.addEventListener("click", function() 
 	{

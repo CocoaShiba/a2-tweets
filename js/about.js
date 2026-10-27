@@ -15,13 +15,13 @@ function parseTweets(runkeeper_tweets) {
 	var numberOfMisc = 0;
 	var numberOfWrittenText = 0;
 	
-	//This line modifies the DOM, searching for the tag with the numberTweets ID and updating the text.
-	//It works correctly, your task is to update the text of the other tags in the HTML file!
+	
 	document.getElementById('numberTweets').innerText = tweet_array.length;	
 
 	document.getElementById('firstDate').innerText = tweet_array[tweet_array.length-1].time.toLocaleDateString();
 	document.getElementById('lastDate').innerText = tweet_array[0].time.toLocaleDateString();
 
+	//Iterate through all tweets and increment counters based on the tweet's source
 	for (i = 0; i < tweet_array.length; i++) 
 	{
 		if (tweet_array[i].source == "live_event") numberOfLiveEvents++;
@@ -32,6 +32,7 @@ function parseTweets(runkeeper_tweets) {
 		if (tweet_array[i].written) numberOfWrittenText++;
 	}
 
+	//Update all stats on about.html to reflect the collected statistics
 	document.getElementsByClassName("completedEvents")[0].innerText = numberOfCompletedEvents;
 	document.getElementsByClassName("completedEventsPct")[0].innerText = (numberOfCompletedEvents / tweet_array.length * 100).toFixed(2) + "%";
 	
