@@ -117,13 +117,6 @@ function parseTweets(runkeeper_tweets) {
 	if (weekdayAverage > weekendAverage) document.getElementById('weekdayOrWeekendLonger').innerText = "the weekday";
 	else document.getElementById('weekdayOrWeekendLonger').innerText = "the weekend";
 
-
-	// const activitiesArray = new Array();
-	// for (i = 0; i < tweet_array.length; i++)
-	// {
-	// 	activitiesArray.push(tweet_array[i].activityType);
-	// } 
-
 	activity_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",

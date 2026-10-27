@@ -12,47 +12,50 @@ function parseTweets(runkeeper_tweets) {
 
 	const writtenTweets = new Array(); 
 
-	for (var i = 0; i < tweet_array.length; i++)
-	{
-		if (tweet_array[i].written) writtenTweets.push(tweet_array[i]);
-	}
-
+	const filterBox = document.getElementById('textFilter');
 	const tableRef = document.getElementsByClassName("table table-striped")[0].getElementsByTagName("tbody")[0];
-
-	for (i = 0; i < writtenTweets.length; i++)
+	
+	if (filterBox.value == "")
 	{
-		var text = "";
-		text = String(writtenTweets[i].getHTMLTableRow(i));
-		
-		tableRef.insertAdjacentHTML("beforeend", text);
+		tableRef.innerHTML = "";
+	}
+	else
+	{
+		for (var i = 0; i < tweet_array.length; i++)
+		{
+			if (tweet_array[i].written && tweet_array[i].text.toLowerCase().includes(filterBox.value.toLowerCase())) writtenTweets.push(tweet_array[i]);
+		}
+
+		tableRef.innerHTML = "";
+
+		for (i = 0; i < writtenTweets.length; i++)
+		{
+			var text = "";
+			text = String(writtenTweets[i].getHTMLTableRow(i));
+			
+			tableRef.insertAdjacentHTML("beforeend", text);
+		}
 	}
 }
 
 function addEventHandlerForSearch() {
 	//TODO: Search the written tweets as text is entered into the search box, and add them to the table
+	const filterBox = document.getElementById('textFilter');
 
-	//const tableRef = document.getElementsByClassName("table table-striped")[0].getElementsByTagName("tbody")[0];
+	filterBox.addEventListener('input', function(event) 
+	{
+    	const currentText = event.target.value; 
+    
+		// if (currentText.trim() !== "") {
+		// console.log("Text is present:", currentText);
+		// } else {
+		// console.log("Text box is empty");
+		// }
 
-	// for (i = 0; i < 4; i++)
-	// {
+		loadSavedRunkeeperTweets().then(parseTweets);
+	});
 
-	// 	const rowHTML = tweet_array[i].getHTMLTableRow;
-	// 	tableRef.insertAdjacentHTML("beforeend", rowHTML)
-
-	// 	// const newRow = tableRef.insertRow(-1);
-
-	// 	// // 3. Insert cells (td) into the new row
-	// 	// const cell1 = newRow.insertCell(0);
-	// 	// const cell2 = newRow.insertCell(1);
-	// 	// const cell3 = newRow.insertCell(2);
-
-	// 	// // 4. Append text or content to the cells
-	// 	// cell1.textContent = i;
-	// 	// cell2.textContent = i + 1;
-	// 	// cell3.textContent = i + 2;
-	// }
-
-
+	
 }
 
 //Wait for the DOM to load
