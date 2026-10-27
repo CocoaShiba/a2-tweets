@@ -148,6 +148,7 @@ function parseTweets(runkeeper_tweets) {
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
+
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
@@ -199,12 +200,34 @@ function parseTweets(runkeeper_tweets) {
 				field: "distance",
 				aggregate: "mean",
 				type: "quantitative",
-				"title": "distance",
+				"title": "Mean of distance",
 			},
 			"color": {"field": "activityType", "type": "nominal", "title": "activityType",},
 		}
 	};
 	vegaEmbed('#distanceVisAggregated', distance_vis_spec, {actions:false});
+	document.getElementById("distanceVisAggregated").style.display = 'none';
+	
+
+	const button = document.getElementById("aggregate");
+
+	var means = false;
+	button.addEventListener("click", function() {
+		means = !means;
+
+		if (means)
+		{
+			button.textContent = "Show all activities";
+			document.getElementById("distanceVis").style.display = 'none';
+			document.getElementById("distanceVisAggregated").style.display = 'block';
+		}
+		else
+		{
+			button.textContent = "Show means";
+			document.getElementById("distanceVis").style.display = 'block';
+			document.getElementById("distanceVisAggregated").style.display = 'none';
+		}
+	});
 }
 
 //Wait for the DOM to load
