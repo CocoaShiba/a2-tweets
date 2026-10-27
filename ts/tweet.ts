@@ -122,5 +122,30 @@ class Tweet {
         return "unknown";
     }
 
-    getHTMLTableRow(rowNumber:number):string { return '<tr> <td>' + (rowNumber + 1) + '</td> <td>' + this.activityType + '</td> <td>' + this.text + '</td> </tr>'; }
+    getHTMLTableRow(rowNumber:number):string {
+        var link = "";
+
+        var linkStart = 0;
+        var linkEnd = 0;
+        linkStart = this.text.indexOf("https");
+        linkEnd = linkStart;
+
+
+        while (this.text.charAt(linkEnd) != " ")
+        {
+            link += this.text.charAt(linkEnd);
+            linkEnd++;
+
+            if (linkEnd > this.text.length) break;
+        }
+
+        var textWithLink = "";
+        textWithLink = this.text.substring(0, linkStart);
+        textWithLink += '<a href = ' + link + '>';
+        textWithLink += this.text.substring(linkStart, linkEnd);
+        textWithLink += '</a>';
+        textWithLink += this.text.substring(linkEnd, this.text.length);
+
+        return '<tr> <td>' + (rowNumber + 1) + '</td> <td>' + this.activityType + '</td> <td>' + textWithLink + '</td> </tr>'; 
+    }
 }
